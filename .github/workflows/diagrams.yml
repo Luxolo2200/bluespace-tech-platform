@@ -22,7 +22,17 @@ jobs:
 
       - name: Run Structurizr CLI via Docker
         run: |
-          docker run --rm -v ${{ github.workspace }}:/usr/local/structurizr structurizr/cli export -workspace docs/architecture/workspace.dsl -format mermaid -output docs/architecture/diagrams
+          docker run --rm \
+            -v ${{ github.workspace }}:/usr/local/structurizr \
+            structurizr/cli export \
+            -workspace docs/architecture/workspace.dsl \
+            -format mermaid \
+            -output docs/architecture/diagrams
+
+      - name: Check Generated Files
+        run: |
+          echo "Checking generated diagram files:"
+          ls -la docs/architecture/diagrams/
 
       - name: Commit and Push Mermaid Outputs
         run: |
