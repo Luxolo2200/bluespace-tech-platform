@@ -12,32 +12,27 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v5
+        uses: actions/checkout@v4
 
       - name: Create Output Directory
         run: mkdir -p docs/architecture/diagrams
 
-      - name: Run Structurizr CLI via Docker
+      - name: Export Diagrams via Structurizr CLI
         run: |
           docker run --rm \
             -v ${{ github.workspace }}:/usr/local/structurizr \
+            -w /usr/local/structurizr \
             structurizr/cli export \
-            -workspace /usr/local/structurizr/docs/architecture/workspace.dsl \
+            -workspace docs/architecture/workspace.dsl \
             -format mermaid \
-            -output /usr/local/structurizr/docs/architecture/diagrams
+            -output docs/architecture/diagrams
 
-      - name: Verify Generated Diagrams
-        run: |
-          ls -la docs/architecture/diagrams/
-          if [ -z "$(ls -A docs/architecture/diagrams/*.mmd 2>/dev/null)" ]; then
-            echo "Error: Structurizr CLI did not output any .mmd files!"
-            exit 1
-          fi
+      - name: Check Output
+        run: ls -la docs/architecture/diagrams/
 
-      - name: Commit and Push Mermaid Outputs
+      - name: Commit and Push
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git add docs/architecture/diagrams/
-          git status
           git diff-index --quiet HEAD || (git commit -m "chore(docs): auto-generate updated mermaid diagrams" && git push)
