@@ -22,17 +22,22 @@ jobs:
           docker run --rm \
             -v ${{ github.workspace }}:/usr/local/structurizr \
             structurizr/cli export \
-            -workspace docs/architecture/workspace.dsl \
+            -workspace /usr/local/structurizr/docs/architecture/workspace.dsl \
             -format mermaid \
-            -output docs/architecture/diagrams
+            -output /usr/local/structurizr/docs/architecture/diagrams
 
-      - name: Fix Directory Permissions
-        run: sudo chown -R $USER:$USER docs/architecture/diagrams
+      - name: Verify Generated Diagrams
+        run: |
+          ls -la docs/architecture/diagrams/
+          if [ -z "$(ls -A docs/architecture/diagrams/*.mmd 2>/dev/null)" ]; then
+            echo "Error: Structurizr CLI did not output any .mmd files!"
+            exit 1
+          fi
 
       - name: Commit and Push Mermaid Outputs
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add docs/architecture/diagrams/*.mmd || true
+          git add docs/architecture/diagrams/
           git status
           git diff-index --quiet HEAD || (git commit -m "chore(docs): auto-generate updated mermaid diagrams" && git push)
