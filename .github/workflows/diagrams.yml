@@ -3,9 +3,6 @@ name: Generate Architecture Diagrams
 on:
   push:
     branches: [ main ]
-    paths:
-      - 'docs/architecture/workspace.dsl'
-      - '.github/workflows/diagrams.yml'
 
 permissions:
   contents: write
@@ -25,9 +22,9 @@ jobs:
           docker run --rm \
             -v ${{ github.workspace }}:/usr/local/structurizr \
             structurizr/cli export \
-            -w docs/architecture/workspace.dsl \
+            -w /usr/local/structurizr/docs/architecture/workspace.dsl \
             -f mermaid \
-            -o docs/architecture/diagrams
+            -o /usr/local/structurizr/docs/architecture/diagrams
 
       - name: Check Generated Files
         run: ls -la docs/architecture/diagrams/
