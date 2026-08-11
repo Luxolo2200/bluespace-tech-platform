@@ -1,4 +1,5 @@
 workspace "BlueSpace Tech Platform" "C4 Architecture Model" {
+
     model {
         user = person "Platform User" "Uses service bookings and account features."
         admin = person "Platform Admin" "Manages users and system settings."
