@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v5
+        uses: actions/checkout@v4
 
       - name: Create Output Directory
         run: mkdir -p docs/architecture/diagrams
@@ -20,13 +20,13 @@ jobs:
       - name: Export Diagrams via Structurizr CLI
         run: |
           docker run --rm \
-            -v ${{ github.workspace }}:/usr/local/structurizr \
+            -v "${{ github.workspace }}/docs/architecture:/workspace" \
             structurizr/cli export \
-            -workspace /usr/local/structurizr/docs/architecture/workspace.dsl \
+            -workspace /workspace/workspace.dsl \
             -format mermaid \
-            -output /usr/local/structurizr/docs/architecture/diagrams
+            -output /workspace/diagrams
 
-      - name: Verify Output Directory
+      - name: List Generated Files
         run: ls -la docs/architecture/diagrams/
 
       - name: Commit and Push Diagrams
@@ -34,4 +34,5 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git add -f docs/architecture/diagrams/
-          git diff-index --quiet HEAD || (git commit -m "chore(docs): auto-generate updated mermaid diagrams" && git push)
+          git commit -m "chore(docs): auto-generate updated mermaid diagrams" || echo "No changes to commit"
+          git push origin main
