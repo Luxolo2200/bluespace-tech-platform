@@ -1,0 +1,27 @@
+graph LR
+  linkStyle default fill:#ffffff
+
+  subgraph diagram ["BlueSpace Tech Platform - Containers"]
+    style diagram fill:#ffffff,stroke:#ffffff
+
+    1["<div style='font-weight: bold'>Platform User</div><div style='font-size: 70%; margin-top: 0px'>[Person]</div><div style='font-size: 80%; margin-top:10px'>A customer using BlueSpace<br />services.</div>"]
+    style 1 fill:#08427b,stroke:#052e56,color:#ffffff
+    2["<div style='font-weight: bold'>Platform Admin</div><div style='font-size: 70%; margin-top: 0px'>[Person]</div><div style='font-size: 80%; margin-top:10px'>System administrator.</div>"]
+    style 2 fill:#08427b,stroke:#052e56,color:#ffffff
+
+    subgraph 3 [BlueSpace Tech Platform]
+      style 3 fill:#ffffff,stroke:#0b4884,color:#0b4884
+
+      4("<div style='font-weight: bold'>Web Application</div><div style='font-size: 70%; margin-top: 0px'>[Container: React / TypeScript]</div><div style='font-size: 80%; margin-top:10px'>Delivers frontend user<br />interface.</div>")
+      style 4 fill:#438dd5,stroke:#2e6295,color:#ffffff
+      5("<div style='font-weight: bold'>API Gateway</div><div style='font-size: 70%; margin-top: 0px'>[Container: Spring Boot]</div><div style='font-size: 80%; margin-top:10px'>Handles incoming requests and<br />routing.</div>")
+      style 5 fill:#438dd5,stroke:#2e6295,color:#ffffff
+      6("<div style='font-weight: bold'>Database</div><div style='font-size: 70%; margin-top: 0px'>[Container: PostgreSQL]</div><div style='font-size: 80%; margin-top:10px'>Stores system and user data.</div>")
+      style 6 fill:#438dd5,stroke:#2e6295,color:#ffffff
+    end
+
+    4-. "<div>API requests</div><div style='font-size: 70%'>[JSON/HTTPS]</div>" .->5
+    5-. "<div>Reads/Writes</div><div style='font-size: 70%'>[JDBC]</div>" .->6
+    1-. "<div>Uses</div><div style='font-size: 70%'>[HTTPS]</div>" .->4
+    2-. "<div>Manages via</div><div style='font-size: 70%'>[HTTPS]</div>" .->4
+  end
