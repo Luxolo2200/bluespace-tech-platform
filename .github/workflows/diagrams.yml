@@ -20,6 +20,14 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install Mermaid CLI
+        run: npm install -g @mermaid-js/mermaid-cli
+
       - name: Download Structurizr CLI
         run: |
           wget https://github.com/structurizr/cli/releases/download/v2024.03.03/structurizr-cli.zip
@@ -28,20 +36,23 @@ jobs:
       - name: Create Output Directory
         run: mkdir -p docs/architecture/diagrams
 
-      - name: Export Diagrams
+      - name: Export Mermaid Diagrams
         run: |
           ./structurizr-cli/structurizr.sh export \
             -workspace docs/architecture/workspace.dsl \
             -format mermaid \
             -output docs/architecture/diagrams
 
-      - name: Verify Diagrams Output
-        run: ls -la docs/architecture/diagrams/
+      - name: Render Mermaid to PNG
+        run: |
+          for file in docs/architecture/diagrams/*.mmd; do
+            mmdc -i "$file" -o "${file%.mmd}.png" -t forest -b transparent
+          done
 
       - name: Commit and Push Diagrams
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add -f docs/architecture/diagrams/*.mmd
-          git commit -m "chore(docs): auto-generate updated mermaid diagrams" || echo "No changes to commit"
+          git add -f docs/architecture/diagrams/
+          git commit -m "chore(docs): auto-generate updated mermaid .mmd and .png diagrams" || echo "No changes to commit"
           git push origin main

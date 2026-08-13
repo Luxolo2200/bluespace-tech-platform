@@ -1,14 +1,14 @@
-\## Architecture Diagrams
+\## System Architecture
 
 
 
 \### System Context
 
-!\[System Context](docs/architecture/diagrams/structurizr-SystemContext.mmd)
+!\[System Context Diagram](docs/architecture/diagrams/structurizr-SystemContext.png)
 
 
 
 \### Containers
 
-!\[Containers](docs/architecture/diagrams/structurizr-Containers.mmd)
+!\[Container Diagram](docs/architecture/diagrams/structurizr-Containers.png)
 
