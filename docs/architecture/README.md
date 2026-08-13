@@ -2,8 +2,8 @@
 
 ## System Context Diagram
 
-![System Context Diagram](diagrams/structurizr-SystemContext.png)
+[![System Context Diagram](diagrams/structurizr-SystemContext.png)](diagrams/structurizr-SystemContext.png)
 
 ## Container Diagram
 
-![Container Diagram](diagrams/structurizr-Containers.png)
+[![Container Diagram](diagrams/structurizr-Containers.png)](diagrams/structurizr-Containers.png)
