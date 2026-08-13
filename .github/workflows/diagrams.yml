@@ -12,18 +12,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Set up Java JDK
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v5
         with:
           java-version: '17'
           distribution: 'temurin'
 
       - name: Set up Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
-          node-version: '20'
+          node-version: '22'
 
       - name: Install Mermaid CLI
         run: npm install -g @mermaid-js/mermaid-cli
@@ -45,8 +45,9 @@ jobs:
 
       - name: Render Mermaid to PNG
         run: |
+          echo '{"args": ["--no-sandbox"]}' > puppeteer-config.json
           for file in docs/architecture/diagrams/*.mmd; do
-            mmdc -i "$file" -o "${file%.mmd}.png" -t forest -b transparent
+            mmdc -p puppeteer-config.json -i "$file" -o "${file%.mmd}.png" -t forest -b transparent
           done
 
       - name: Commit and Push Diagrams
