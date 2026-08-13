@@ -1,18 +1,9 @@
-\# BlueSpace Tech Platform - Architecture Documentation
+# BlueSpace Tech Platform - Architecture Documentation
 
+## System Context Diagram
 
+![System Context Diagram](diagrams/structurizr-SystemContext.png)
 
-\## System Context Diagram
+## Container Diagram
 
-
-
-!\[System Context Diagram](diagrams/structurizr-SystemContext.png)
-
-
-
-\## Container Diagram
-
-
-
-!\[Container Diagram](diagrams/structurizr-Containers.png)
-
+![Container Diagram](diagrams/structurizr-Containers.png)
