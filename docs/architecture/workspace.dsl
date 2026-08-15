@@ -13,8 +13,8 @@ workspace "BlueSpace Tech Platform" "Architecture documentation for BlueSpace Te
             cloudflare = container "Cloudflare CDN / WAF" "Provides global DNS, DDoS protection, WAF security, free SSL, and static asset caching." "Cloudflare Edge"
             nginx = container "NGINX Reverse Proxy" "Handles internal routing, request forwarding, and SSL termination within the Docker host." "NGINX / Docker"
             webApp = container "Spring Boot Application" "Modular monolith executing business logic, booking engine, price calculations, billing, and system APIs." "Spring Boot / Java"
-            redisCache = container "Redis Cache" "In-memory key-value cache used for session storage, query caching, and rate limiting via the Cache-Aside pattern." "Redis"
-            database = container "PostgreSQL Database" "Primary relational database storing system entities, user profiles, inventory, repair logs, and billing data." "PostgreSQL"
+            redisCache = container "Redis Cache" "In-memory key-value cache used for session storage, query caching, and rate limiting via the Cache-Aside pattern." "Redis" "Database"
+            database = container "PostgreSQL Database" "Primary relational database storing system entities, user profiles, inventory, repair logs, and billing data." "PostgreSQL" "Database"
         }
 
         # --- External Software Systems ---
@@ -52,12 +52,33 @@ workspace "BlueSpace Tech Platform" "Architecture documentation for BlueSpace Te
     views {
         systemContext blueSpaceSystem "SystemContext" {
             include *
-            autoLayout lr
+            autoLayout tb
         }
 
         container blueSpaceSystem "Containers" {
             include *
-            autoLayout lr
+            autoLayout tb
+        }
+
+        styles {
+            element "Element" {
+                color #ffffff
+                fontSize 24
+            }
+            element "Person" {
+                background #08427b
+                shape Person
+            }
+            element "Software System" {
+                background #1168bd
+            }
+            element "Container" {
+                background #438dd5
+            }
+            element "Database" {
+                shape Cylinder
+                background #2a629a
+            }
         }
 
         theme default
