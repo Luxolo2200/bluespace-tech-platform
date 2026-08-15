@@ -6,6 +6,12 @@ graph LR
 
     1["<div style='font-weight: bold'>Public Visitors</div><div style='font-size: 70%; margin-top: 0px'>[Person]</div><div style='font-size: 80%; margin-top:10px'>Unauthenticated users<br />browsing services, blog<br />articles, FAQs, using repair<br />price calculator, and<br />submitting quote requests.</div>"]
     style 1 fill:#08427b,stroke:#052e56,color:#ffffff
+    11("<div style='font-weight: bold'>WhatsApp Cloud API</div><div style='font-size: 70%; margin-top: 0px'>[Software System]</div><div style='font-size: 80%; margin-top:10px'>Delivers automated real-time<br />status updates, quote<br />approval requests, and<br />collection notifications<br />directly to customers.</div>")
+    style 11 fill:#1168bd,stroke:#0b4884,color:#ffffff
+    12("<div style='font-weight: bold'>Payment Gateway API</div><div style='font-size: 70%; margin-top: 0px'>[Software System]</div><div style='font-size: 80%; margin-top:10px'>Processes customer online<br />invoice payments securely and<br />returns transaction<br />verifications.</div>")
+    style 12 fill:#1168bd,stroke:#0b4884,color:#ffffff
+    13("<div style='font-weight: bold'>SMTP Email Service</div><div style='font-size: 70%; margin-top: 0px'>[Software System]</div><div style='font-size: 80%; margin-top:10px'>Dispatches transactional<br />booking confirmations,<br />digital PDF invoices,<br />receipts, and account<br />verification links.</div>")
+    style 13 fill:#1168bd,stroke:#0b4884,color:#ffffff
     2["<div style='font-weight: bold'>Customers</div><div style='font-size: 70%; margin-top: 0px'>[Person]</div><div style='font-size: 80%; margin-top:10px'>Registered clients booking<br />repairs, tracking job<br />progress, approving<br />diagnostic quotes, making<br />payments, and viewing repair<br />history.</div>"]
     style 2 fill:#08427b,stroke:#052e56,color:#ffffff
     3["<div style='font-weight: bold'>Technicians</div><div style='font-size: 70%; margin-top: 0px'>[Person]</div><div style='font-size: 80%; margin-top:10px'>Staff managing daily<br />workloads, recording<br />diagnostic logs, requesting<br />parts, updating repair<br />stages, and marking jobs<br />complete.</div>"]
@@ -14,18 +20,12 @@ graph LR
     style 4 fill:#08427b,stroke:#052e56,color:#ffffff
     5("<div style='font-weight: bold'>BlueSpace Tech Platform</div><div style='font-size: 70%; margin-top: 0px'>[Software System]</div><div style='font-size: 80%; margin-top:10px'>The central operating system<br />for BlueSpace Tech<br />operations. Enables online<br />service booking, instant<br />price calculations, real-time<br />repair tracking, technician<br />workflows, inventory,<br />billing, and business<br />analytics.</div>")
     style 5 fill:#1168bd,stroke:#0b4884,color:#ffffff
-    6("<div style='font-weight: bold'>WhatsApp Cloud API</div><div style='font-size: 70%; margin-top: 0px'>[Software System]</div><div style='font-size: 80%; margin-top:10px'>Delivers automated real-time<br />status updates, quote<br />approval requests, and<br />collection notifications<br />directly to customers.</div>")
-    style 6 fill:#1168bd,stroke:#0b4884,color:#ffffff
-    7("<div style='font-weight: bold'>Payment Gateway API</div><div style='font-size: 70%; margin-top: 0px'>[Software System]</div><div style='font-size: 80%; margin-top:10px'>Processes customer online<br />invoice payments securely and<br />returns transaction<br />verifications.</div>")
-    style 7 fill:#1168bd,stroke:#0b4884,color:#ffffff
-    8("<div style='font-weight: bold'>SMTP Email Service</div><div style='font-size: 70%; margin-top: 0px'>[Software System]</div><div style='font-size: 80%; margin-top:10px'>Dispatches transactional<br />booking confirmations,<br />digital PDF invoices,<br />receipts, and account<br />verification links.</div>")
-    style 8 fill:#1168bd,stroke:#0b4884,color:#ffffff
 
+    1-. "<div>Browses services, calculates<br />estimates, requests quotes</div><div style='font-size: 70%'>[HTTPS]</div>" .->5
     2-. "<div>Books repairs, tracks<br />progress, approves quotes,<br />pays invoices</div><div style='font-size: 70%'>[HTTPS]</div>" .->5
     3-. "<div>Logs diagnostics, requests<br />replacement parts, updates<br />status</div><div style='font-size: 70%'>[HTTPS]</div>" .->5
     4-. "<div>Manages users, sets pricing,<br />generates reports, oversees<br />business</div><div style='font-size: 70%'>[HTTPS]</div>" .->5
-    5-. "<div>Triggers automated message<br />notifications</div><div style='font-size: 70%'>[HTTPS/REST]</div>" .->6
-    5-. "<div>Initiates payment sessions<br />and verifies transactions</div><div style='font-size: 70%'>[HTTPS/REST]</div>" .->7
-    5-. "<div>Sends system emails,<br />invoices, and receipts</div><div style='font-size: 70%'>[SMTP/HTTPS]</div>" .->8
-    1-. "<div>Browses services, calculates<br />estimates, requests quotes</div><div style='font-size: 70%'>[HTTPS]</div>" .->5
+    5-. "<div>Triggers automated message<br />notifications</div><div style='font-size: 70%'>[HTTPS/REST]</div>" .->11
+    5-. "<div>Initiates payment sessions<br />and verifies transactions</div><div style='font-size: 70%'>[HTTPS/REST]</div>" .->12
+    5-. "<div>Sends system emails,<br />invoices, and receipts</div><div style='font-size: 70%'>[SMTP/HTTPS]</div>" .->13
   end
