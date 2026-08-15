@@ -1,4 +1,4 @@
-graph LR
+graph TB
   linkStyle default fill:#ffffff
 
   subgraph diagram ["BlueSpace Tech Platform - Containers"]
@@ -22,16 +22,16 @@ graph LR
     subgraph 5 [BlueSpace Tech Platform]
       style 5 fill:#ffffff,stroke:#0b4884,color:#0b4884
 
-      10("<div style='font-weight: bold'>PostgreSQL Database</div><div style='font-size: 70%; margin-top: 0px'>[Container: PostgreSQL]</div><div style='font-size: 80%; margin-top:10px'>Primary relational database<br />storing system entities, user<br />profiles, inventory, repair<br />logs, and billing data.</div>")
-      style 10 fill:#438dd5,stroke:#2e6295,color:#ffffff
+      10[("<div style='font-weight: bold'>PostgreSQL Database</div><div style='font-size: 70%; margin-top: 0px'>[Container: PostgreSQL]</div><div style='font-size: 80%; margin-top:10px'>Primary relational database<br />storing system entities, user<br />profiles, inventory, repair<br />logs, and billing data.</div>")]
+      style 10 fill:#2a629a,stroke:#1d446b,color:#ffffff
       6("<div style='font-weight: bold'>Cloudflare CDN / WAF</div><div style='font-size: 70%; margin-top: 0px'>[Container: Cloudflare Edge]</div><div style='font-size: 80%; margin-top:10px'>Provides global DNS, DDoS<br />protection, WAF security,<br />free SSL, and static asset<br />caching.</div>")
       style 6 fill:#438dd5,stroke:#2e6295,color:#ffffff
       7("<div style='font-weight: bold'>NGINX Reverse Proxy</div><div style='font-size: 70%; margin-top: 0px'>[Container: NGINX / Docker]</div><div style='font-size: 80%; margin-top:10px'>Handles internal routing,<br />request forwarding, and SSL<br />termination within the Docker<br />host.</div>")
       style 7 fill:#438dd5,stroke:#2e6295,color:#ffffff
       8("<div style='font-weight: bold'>Spring Boot Application</div><div style='font-size: 70%; margin-top: 0px'>[Container: Spring Boot / Java]</div><div style='font-size: 80%; margin-top:10px'>Modular monolith executing<br />business logic, booking<br />engine, price calculations,<br />billing, and system APIs.</div>")
       style 8 fill:#438dd5,stroke:#2e6295,color:#ffffff
-      9("<div style='font-weight: bold'>Redis Cache</div><div style='font-size: 70%; margin-top: 0px'>[Container: Redis]</div><div style='font-size: 80%; margin-top:10px'>In-memory key-value cache<br />used for session storage,<br />query caching, and rate<br />limiting via the Cache-Aside<br />pattern.</div>")
-      style 9 fill:#438dd5,stroke:#2e6295,color:#ffffff
+      9[("<div style='font-weight: bold'>Redis Cache</div><div style='font-size: 70%; margin-top: 0px'>[Container: Redis]</div><div style='font-size: 80%; margin-top:10px'>In-memory key-value cache<br />used for session storage,<br />query caching, and rate<br />limiting via the Cache-Aside<br />pattern.</div>")]
+      style 9 fill:#2a629a,stroke:#1d446b,color:#ffffff
     end
 
     1-. "<div>Accesses platform services<br />via</div><div style='font-size: 70%'>[HTTPS]</div>" .->6
