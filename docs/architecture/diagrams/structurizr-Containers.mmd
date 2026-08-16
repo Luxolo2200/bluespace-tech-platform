@@ -4,45 +4,45 @@ graph TB
   subgraph diagram ["BlueSpace Tech Platform - Containers"]
     style diagram fill:#ffffff,stroke:#ffffff
 
-    1["<div style='font-weight: bold'>Public Visitors</div><div style='font-size: 70%; margin-top: 0px'>[Person]</div><div style='font-size: 80%; margin-top:10px'>Unauthenticated users<br />browsing services, blog<br />articles, FAQs, using repair<br />price calculator, and<br />submitting quote requests.</div>"]
+    1["<div style='font-weight: bold'>Public Visitors</div><div style='font-size: 70%; margin-top: 0px'>[Person]</div><div style='font-size: 80%; margin-top:10px'>Unauthenticated users<br />browsing services and<br />requesting quotes.</div>"]
     style 1 fill:#08427b,stroke:#052e56,color:#ffffff
-    2["<div style='font-weight: bold'>Customers</div><div style='font-size: 70%; margin-top: 0px'>[Person]</div><div style='font-size: 80%; margin-top:10px'>Registered clients booking<br />repairs, tracking job<br />progress, approving<br />diagnostic quotes, making<br />payments, and viewing repair<br />history.</div>"]
+    2["<div style='font-weight: bold'>Customers</div><div style='font-size: 70%; margin-top: 0px'>[Person]</div><div style='font-size: 80%; margin-top:10px'>Clients booking repairs,<br />tracking jobs, and paying<br />invoices.</div>"]
     style 2 fill:#08427b,stroke:#052e56,color:#ffffff
-    3["<div style='font-weight: bold'>Technicians</div><div style='font-size: 70%; margin-top: 0px'>[Person]</div><div style='font-size: 80%; margin-top:10px'>Staff managing daily<br />workloads, recording<br />diagnostic logs, requesting<br />parts, updating repair<br />stages, and marking jobs<br />complete.</div>"]
+    3["<div style='font-weight: bold'>Technicians</div><div style='font-size: 70%; margin-top: 0px'>[Person]</div><div style='font-size: 80%; margin-top:10px'>Staff managing workloads,<br />logs, and updating repair<br />status.</div>"]
     style 3 fill:#08427b,stroke:#052e56,color:#ffffff
-    4["<div style='font-weight: bold'>Administrators</div><div style='font-size: 70%; margin-top: 0px'>[Person]</div><div style='font-size: 80%; margin-top:10px'>Managers monitoring business<br />performance, configuring<br />pricing rules, overseeing<br />inventory, generating<br />invoices, and managing<br />accounts.</div>"]
+    4["<div style='font-weight: bold'>Administrators</div><div style='font-size: 70%; margin-top: 0px'>[Person]</div><div style='font-size: 80%; margin-top:10px'>Managers overseeing pricing,<br />inventory, and system<br />accounts.</div>"]
     style 4 fill:#08427b,stroke:#052e56,color:#ffffff
-    18("<div style='font-weight: bold'>WhatsApp Cloud API</div><div style='font-size: 70%; margin-top: 0px'>[Software System]</div><div style='font-size: 80%; margin-top:10px'>Delivers automated real-time<br />status updates, quote<br />approval requests, and<br />collection notifications<br />directly to customers.</div>")
+    18("<div style='font-weight: bold'>WhatsApp Cloud API</div><div style='font-size: 70%; margin-top: 0px'>[Software System]</div><div style='font-size: 80%; margin-top:10px'>Automated status updates &<br />collection alerts</div>")
     style 18 fill:#1168bd,stroke:#0b4884,color:#ffffff
-    19("<div style='font-weight: bold'>Payment Gateway API</div><div style='font-size: 70%; margin-top: 0px'>[Software System]</div><div style='font-size: 80%; margin-top:10px'>Processes customer online<br />invoice payments securely and<br />returns transaction<br />verifications.</div>")
+    19("<div style='font-weight: bold'>Payment Gateway API</div><div style='font-size: 70%; margin-top: 0px'>[Software System]</div><div style='font-size: 80%; margin-top:10px'>Processes online invoice<br />payments</div>")
     style 19 fill:#1168bd,stroke:#0b4884,color:#ffffff
-    20("<div style='font-weight: bold'>SMTP Email Service</div><div style='font-size: 70%; margin-top: 0px'>[Software System]</div><div style='font-size: 80%; margin-top:10px'>Dispatches transactional<br />booking confirmations,<br />digital PDF invoices,<br />receipts, and account<br />verification links.</div>")
+    20("<div style='font-weight: bold'>SMTP Email Service</div><div style='font-size: 70%; margin-top: 0px'>[Software System]</div><div style='font-size: 80%; margin-top:10px'>Dispatches booking receipts &<br />PDF invoices</div>")
     style 20 fill:#1168bd,stroke:#0b4884,color:#ffffff
 
     subgraph 5 [BlueSpace Tech Platform]
       style 5 fill:#ffffff,stroke:#0b4884,color:#0b4884
 
-      16[("<div style='font-weight: bold'>Redis Cache</div><div style='font-size: 70%; margin-top: 0px'>[Container: Redis]</div><div style='font-size: 80%; margin-top:10px'>In-memory key-value cache<br />used for session storage,<br />query caching, and rate<br />limiting via the Cache-Aside<br />pattern.</div>")]
-      style 16 fill:#2a629a,stroke:#1d446b,color:#ffffff
-      17[("<div style='font-weight: bold'>PostgreSQL Database</div><div style='font-size: 70%; margin-top: 0px'>[Container: PostgreSQL]</div><div style='font-size: 80%; margin-top:10px'>Primary relational database<br />storing system entities, user<br />profiles, inventory, repair<br />logs, and billing data.</div>")]
-      style 17 fill:#2a629a,stroke:#1d446b,color:#ffffff
-      6("<div style='font-weight: bold'>Cloudflare CDN / WAF</div><div style='font-size: 70%; margin-top: 0px'>[Container: Cloudflare Edge]</div><div style='font-size: 80%; margin-top:10px'>Provides global DNS, DDoS<br />protection, WAF security,<br />free SSL, and static asset<br />caching.</div>")
-      style 6 fill:#438dd5,stroke:#2e6295,color:#ffffff
-      7("<div style='font-weight: bold'>NGINX Reverse Proxy</div><div style='font-size: 70%; margin-top: 0px'>[Container: NGINX / Docker]</div><div style='font-size: 80%; margin-top:10px'>Handles internal routing,<br />request forwarding, and SSL<br />termination within the Docker<br />host.</div>")
-      style 7 fill:#438dd5,stroke:#2e6295,color:#ffffff
-      8("<div style='font-weight: bold'>Spring Boot Application</div><div style='font-size: 70%; margin-top: 0px'>[Container: Spring Boot / Java 21]</div><div style='font-size: 80%; margin-top:10px'>Modular monolith executing<br />business logic, booking<br />engine, price calculations,<br />billing, and system APIs.</div>")
-      style 8 fill:#438dd5,stroke:#2e6295,color:#ffffff
+      16[("<div style='font-weight: bold'>Redis Cache</div><div style='font-size: 70%; margin-top: 0px'>[Container: Redis]</div><div style='font-size: 80%; margin-top:10px'>Session storage & Cache-Aside<br />store</div>")]
+      style 16 fill:#1f5183,stroke:#15385b,color:#ffffff
+      17[("<div style='font-weight: bold'>PostgreSQL Database</div><div style='font-size: 70%; margin-top: 0px'>[Container: PostgreSQL]</div><div style='font-size: 80%; margin-top:10px'>Primary persistence database</div>")]
+      style 17 fill:#1f5183,stroke:#15385b,color:#ffffff
+      6("<div style='font-weight: bold'>Cloudflare CDN / WAF</div><div style='font-size: 70%; margin-top: 0px'>[Container: Cloudflare Edge]</div><div style='font-size: 80%; margin-top:10px'>Edge DNS, DDoS protection &<br />static caching</div>")
+      style 6 fill:#2b78c5,stroke:#1e5489,color:#ffffff
+      7("<div style='font-weight: bold'>NGINX Reverse Proxy</div><div style='font-size: 70%; margin-top: 0px'>[Container: NGINX / Docker]</div><div style='font-size: 80%; margin-top:10px'>Internal routing & SSL<br />termination</div>")
+      style 7 fill:#2b78c5,stroke:#1e5489,color:#ffffff
+      8("<div style='font-weight: bold'>Spring Boot Application</div><div style='font-size: 70%; margin-top: 0px'>[Container: Spring Boot / Java 21]</div><div style='font-size: 80%; margin-top:10px'>Modular monolith executing<br />core business logic</div>")
+      style 8 fill:#2b78c5,stroke:#1e5489,color:#ffffff
     end
 
-    1-. "<div>Accesses platform services<br />via</div><div style='font-size: 70%'>[HTTPS]</div>" .->6
+    1-. "<div>Accesses platform via</div><div style='font-size: 70%'>[HTTPS]</div>" .->6
     2-. "<div>Accesses customer portal via</div><div style='font-size: 70%'>[HTTPS]</div>" .->6
     3-. "<div>Accesses technician workspace<br />via</div><div style='font-size: 70%'>[HTTPS]</div>" .->6
-    4-. "<div>Accesses admin management<br />console via</div><div style='font-size: 70%'>[HTTPS]</div>" .->6
-    6-. "<div>Proxies verified traffic to</div><div style='font-size: 70%'>[HTTPS]</div>" .->7
+    4-. "<div>Accesses management console<br />via</div><div style='font-size: 70%'>[HTTPS]</div>" .->6
+    6-. "<div>Proxies traffic to</div><div style='font-size: 70%'>[HTTPS]</div>" .->7
     7-. "<div>Routes requests internally to</div><div style='font-size: 70%'>[HTTP]</div>" .->8
-    8-. "<div>Caches and reads frequent<br />data using Cache-Aside<br />pattern</div><div style='font-size: 70%'>[RESP Protocol]</div>" .->16
-    8-. "<div>Reads and writes persistence<br />data</div><div style='font-size: 70%'>[JDBC / SQL]</div>" .->17
+    8-. "<div>Caches data via Cache-Aside</div><div style='font-size: 70%'>[RESP]</div>" .->16
+    8-. "<div>Reads/Writes data</div><div style='font-size: 70%'>[JDBC/SQL]</div>" .->17
     8-. "<div>Sends real-time updates via</div><div style='font-size: 70%'>[HTTPS/REST]</div>" .->18
-    8-. "<div>Processes transactions via</div><div style='font-size: 70%'>[HTTPS/REST]</div>" .->19
+    8-. "<div>Processes payments via</div><div style='font-size: 70%'>[HTTPS/REST]</div>" .->19
     8-. "<div>Dispatches emails via</div><div style='font-size: 70%'>[SMTP/HTTPS]</div>" .->20
   end

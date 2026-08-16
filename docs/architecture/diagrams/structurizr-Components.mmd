@@ -4,48 +4,48 @@ graph TB
   subgraph diagram ["BlueSpace Tech Platform - Spring Boot Application - Components"]
     style diagram fill:#ffffff,stroke:#ffffff
 
-    7("<div style='font-weight: bold'>NGINX Reverse Proxy</div><div style='font-size: 70%; margin-top: 0px'>[Container: NGINX / Docker]</div><div style='font-size: 80%; margin-top:10px'>Handles internal routing,<br />request forwarding, and SSL<br />termination within the Docker<br />host.</div>")
-    style 7 fill:#438dd5,stroke:#2e6295,color:#ffffff
-    16[("<div style='font-weight: bold'>Redis Cache</div><div style='font-size: 70%; margin-top: 0px'>[Container: Redis]</div><div style='font-size: 80%; margin-top:10px'>In-memory key-value cache<br />used for session storage,<br />query caching, and rate<br />limiting via the Cache-Aside<br />pattern.</div>")]
-    style 16 fill:#2a629a,stroke:#1d446b,color:#ffffff
-    17[("<div style='font-weight: bold'>PostgreSQL Database</div><div style='font-size: 70%; margin-top: 0px'>[Container: PostgreSQL]</div><div style='font-size: 80%; margin-top:10px'>Primary relational database<br />storing system entities, user<br />profiles, inventory, repair<br />logs, and billing data.</div>")]
-    style 17 fill:#2a629a,stroke:#1d446b,color:#ffffff
-    18("<div style='font-weight: bold'>WhatsApp Cloud API</div><div style='font-size: 70%; margin-top: 0px'>[Software System]</div><div style='font-size: 80%; margin-top:10px'>Delivers automated real-time<br />status updates, quote<br />approval requests, and<br />collection notifications<br />directly to customers.</div>")
+    7("<div style='font-weight: bold'>NGINX Reverse Proxy</div><div style='font-size: 70%; margin-top: 0px'>[Container: NGINX / Docker]</div><div style='font-size: 80%; margin-top:10px'>Internal routing & SSL<br />termination</div>")
+    style 7 fill:#2b78c5,stroke:#1e5489,color:#ffffff
+    16[("<div style='font-weight: bold'>Redis Cache</div><div style='font-size: 70%; margin-top: 0px'>[Container: Redis]</div><div style='font-size: 80%; margin-top:10px'>Session storage & Cache-Aside<br />store</div>")]
+    style 16 fill:#1f5183,stroke:#15385b,color:#ffffff
+    17[("<div style='font-weight: bold'>PostgreSQL Database</div><div style='font-size: 70%; margin-top: 0px'>[Container: PostgreSQL]</div><div style='font-size: 80%; margin-top:10px'>Primary persistence database</div>")]
+    style 17 fill:#1f5183,stroke:#15385b,color:#ffffff
+    18("<div style='font-weight: bold'>WhatsApp Cloud API</div><div style='font-size: 70%; margin-top: 0px'>[Software System]</div><div style='font-size: 80%; margin-top:10px'>Automated status updates &<br />collection alerts</div>")
     style 18 fill:#1168bd,stroke:#0b4884,color:#ffffff
-    19("<div style='font-weight: bold'>Payment Gateway API</div><div style='font-size: 70%; margin-top: 0px'>[Software System]</div><div style='font-size: 80%; margin-top:10px'>Processes customer online<br />invoice payments securely and<br />returns transaction<br />verifications.</div>")
+    19("<div style='font-weight: bold'>Payment Gateway API</div><div style='font-size: 70%; margin-top: 0px'>[Software System]</div><div style='font-size: 80%; margin-top:10px'>Processes online invoice<br />payments</div>")
     style 19 fill:#1168bd,stroke:#0b4884,color:#ffffff
-    20("<div style='font-weight: bold'>SMTP Email Service</div><div style='font-size: 70%; margin-top: 0px'>[Software System]</div><div style='font-size: 80%; margin-top:10px'>Dispatches transactional<br />booking confirmations,<br />digital PDF invoices,<br />receipts, and account<br />verification links.</div>")
+    20("<div style='font-weight: bold'>SMTP Email Service</div><div style='font-size: 70%; margin-top: 0px'>[Software System]</div><div style='font-size: 80%; margin-top:10px'>Dispatches booking receipts &<br />PDF invoices</div>")
     style 20 fill:#1168bd,stroke:#0b4884,color:#ffffff
 
     subgraph 8 [Spring Boot Application]
-      style 8 fill:#ffffff,stroke:#2e6295,color:#2e6295
+      style 8 fill:#ffffff,stroke:#1e5489,color:#1e5489
 
-      10("<div style='font-weight: bold'>User & Identity Module</div><div style='font-size: 70%; margin-top: 0px'>[Component: Spring Domain Module]</div><div style='font-size: 80%; margin-top:10px'>Manages user profiles and<br />customer records.</div>")
-      style 10 fill:#85bbf0,stroke:#5d82a8,color:#000000
-      11("<div style='font-weight: bold'>Bookings & Service Module</div><div style='font-size: 70%; margin-top: 0px'>[Component: Spring Domain Module]</div><div style='font-size: 80%; margin-top:10px'>Core Domain Orchestrator<br />managing repair lifecycle<br />(Received -> Diagnosed -><br />In-Repair -> Completed).</div>")
-      style 11 fill:#85bbf0,stroke:#5d82a8,color:#000000
-      12("<div style='font-weight: bold'>Pricing Calculator</div><div style='font-size: 70%; margin-top: 0px'>[Component: Spring Service]</div><div style='font-size: 80%; margin-top:10px'>Calculates estimates and<br />dynamic price quotes.</div>")
-      style 12 fill:#85bbf0,stroke:#5d82a8,color:#000000
-      13("<div style='font-weight: bold'>Inventory & Parts</div><div style='font-size: 70%; margin-top: 0px'>[Component: Spring Domain Module]</div><div style='font-size: 80%; margin-top:10px'>Handles stock reservation and<br />replacement parts deduction.</div>")
-      style 13 fill:#85bbf0,stroke:#5d82a8,color:#000000
-      14("<div style='font-weight: bold'>Billing & Invoicing</div><div style='font-size: 70%; margin-top: 0px'>[Component: Spring Domain Module]</div><div style='font-size: 80%; margin-top:10px'>Generates invoices and<br />records transaction billing<br />data.</div>")
-      style 14 fill:#85bbf0,stroke:#5d82a8,color:#000000
-      15("<div style='font-weight: bold'>Async Notification</div><div style='font-size: 70%; margin-top: 0px'>[Component: Spring Event / Async]</div><div style='font-size: 80%; margin-top:10px'>Emits asynchronous events for<br />messaging services.</div>")
-      style 15 fill:#85bbf0,stroke:#5d82a8,color:#000000
-      9("<div style='font-weight: bold'>Security & Auth Component</div><div style='font-size: 70%; margin-top: 0px'>[Component: Spring Security]</div><div style='font-size: 80%; margin-top:10px'>Filter Chain and JWT Claims<br />processing.</div>")
-      style 9 fill:#85bbf0,stroke:#5d82a8,color:#000000
+      10("<div style='font-weight: bold'>User & Identity</div><div style='font-size: 70%; margin-top: 0px'>[Component: Spring Domain]</div><div style='font-size: 80%; margin-top:10px'>User profiles & client<br />records</div>")
+      style 10 fill:#5294d3,stroke:#396793,color:#ffffff
+      11("<div style='font-weight: bold'>Bookings & Service</div><div style='font-size: 70%; margin-top: 0px'>[Component: Spring Domain]</div><div style='font-size: 80%; margin-top:10px'>Core repair lifecycle<br />orchestrator</div>")
+      style 11 fill:#5294d3,stroke:#396793,color:#ffffff
+      12("<div style='font-weight: bold'>Pricing Calculator</div><div style='font-size: 70%; margin-top: 0px'>[Component: Spring Service]</div><div style='font-size: 80%; margin-top:10px'>Estimates & dynamic price<br />quotes</div>")
+      style 12 fill:#5294d3,stroke:#396793,color:#ffffff
+      13("<div style='font-weight: bold'>Inventory & Parts</div><div style='font-size: 70%; margin-top: 0px'>[Component: Spring Domain]</div><div style='font-size: 80%; margin-top:10px'>Stock reservation & parts<br />deduction</div>")
+      style 13 fill:#5294d3,stroke:#396793,color:#ffffff
+      14("<div style='font-weight: bold'>Billing & Invoicing</div><div style='font-size: 70%; margin-top: 0px'>[Component: Spring Domain]</div><div style='font-size: 80%; margin-top:10px'>Invoice generation & billing<br />logs</div>")
+      style 14 fill:#5294d3,stroke:#396793,color:#ffffff
+      15("<div style='font-weight: bold'>Async Notification</div><div style='font-size: 70%; margin-top: 0px'>[Component: Spring Event]</div><div style='font-size: 80%; margin-top:10px'>Event-driven background<br />messaging</div>")
+      style 15 fill:#5294d3,stroke:#396793,color:#ffffff
+      9("<div style='font-weight: bold'>Security & Auth</div><div style='font-size: 70%; margin-top: 0px'>[Component: Spring Security]</div><div style='font-size: 80%; margin-top:10px'>Filter Chain & JWT Claims</div>")
+      style 9 fill:#5294d3,stroke:#396793,color:#ffffff
     end
 
-    7-. "<div>Forwards incoming REST<br />requests to</div><div style='font-size: 70%'>[HTTP]</div>" .->9
+    7-. "<div>Forwards REST requests to</div><div style='font-size: 70%'>[HTTP]</div>" .->9
     9-. "<div>Enforces Security Context</div><div style='font-size: 70%'></div>" .->11
-    10-. "<div>Validates Profile</div><div style='font-size: 70%'></div>" .->11
-    11-. "<div>Get Estimate</div><div style='font-size: 70%'></div>" .->12
-    11-. "<div>Reserve / Deduct Parts</div><div style='font-size: 70%'></div>" .->13
-    11-. "<div>Create Invoice</div><div style='font-size: 70%'></div>" .->14
-    11-. "<div>Emits Event</div><div style='font-size: 70%'></div>" .->15
-    9-. "<div>Validates session token</div><div style='font-size: 70%'></div>" .->16
+    10-. "<div>Validates User Profile</div><div style='font-size: 70%'></div>" .->11
+    11-. "<div>Requests Price Estimate</div><div style='font-size: 70%'></div>" .->12
+    11-. "<div>Reserves / Deducts Stock</div><div style='font-size: 70%'></div>" .->13
+    11-. "<div>Generates Invoice</div><div style='font-size: 70%'></div>" .->14
+    11-. "<div>Emits Async Event</div><div style='font-size: 70%'></div>" .->15
+    9-. "<div>Validates session tokens</div><div style='font-size: 70%'></div>" .->16
     11-. "<div>Persists repair state</div><div style='font-size: 70%'></div>" .->17
     14-. "<div>Processes invoice payment</div><div style='font-size: 70%'></div>" .->19
-    15-. "<div>Triggers message</div><div style='font-size: 70%'></div>" .->18
-    15-. "<div>Sends email</div><div style='font-size: 70%'></div>" .->20
+    15-. "<div>Triggers WhatsApp alert</div><div style='font-size: 70%'></div>" .->18
+    15-. "<div>Triggers email receipt</div><div style='font-size: 70%'></div>" .->20
   end
