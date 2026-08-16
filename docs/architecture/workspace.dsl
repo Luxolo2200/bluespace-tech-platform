@@ -2,77 +2,77 @@ workspace "BlueSpace Tech Platform" "Architecture documentation for BlueSpace Te
 
     model {
         # --- People / Roles ---
-        publicVisitor = person "Public Visitors" "Unauthenticated users browsing services, blog articles, FAQs, using repair price calculator, and submitting quote requests."
-        customer = person "Customers" "Registered clients booking repairs, tracking job progress, approving diagnostic quotes, making payments, and viewing repair history."
-        technician = person "Technicians" "Staff managing daily workloads, recording diagnostic logs, requesting parts, updating repair stages, and marking jobs complete."
-        admin = person "Administrators" "Managers monitoring business performance, configuring pricing rules, overseeing inventory, generating invoices, and managing accounts."
+        publicVisitor = person "Public Visitors" "Unauthenticated users browsing services and requesting quotes."
+        customer = person "Customers" "Clients booking repairs, tracking jobs, and paying invoices."
+        technician = person "Technicians" "Staff managing workloads, logs, and updating repair status."
+        admin = person "Administrators" "Managers overseeing pricing, inventory, and system accounts."
 
         # --- Primary Software System ---
-        blueSpaceSystem = softwareSystem "BlueSpace Tech Platform" "The central operating system for BlueSpace Tech operations. Enables online service booking, instant price calculations, real-time repair tracking, technician workflows, inventory, billing, and business analytics." {
+        blueSpaceSystem = softwareSystem "BlueSpace Tech Platform" "Central operating system for online booking, repairs, and billing." {
             
-            cloudflare = container "Cloudflare CDN / WAF" "Provides global DNS, DDoS protection, WAF security, free SSL, and static asset caching." "Cloudflare Edge"
-            nginx = container "NGINX Reverse Proxy" "Handles internal routing, request forwarding, and SSL termination within the Docker host." "NGINX / Docker"
+            cloudflare = container "Cloudflare CDN / WAF" "Edge DNS, DDoS protection & static caching" "Cloudflare Edge"
+            nginx = container "NGINX Reverse Proxy" "Internal routing & SSL termination" "NGINX / Docker"
             
-            webApp = container "Spring Boot Application" "Modular monolith executing business logic, booking engine, price calculations, billing, and system APIs." "Spring Boot / Java 21" {
-                securityAuth = component "Security & Auth Component" "Filter Chain and JWT Claims processing." "Spring Security"
-                userIdentity = component "User & Identity Module" "Manages user profiles and customer records." "Spring Domain Module"
-                bookingsService = component "Bookings & Service Module" "Core Domain Orchestrator managing repair lifecycle (Received -> Diagnosed -> In-Repair -> Completed)." "Spring Domain Module"
-                pricingCalc = component "Pricing Calculator" "Calculates estimates and dynamic price quotes." "Spring Service"
-                inventoryParts = component "Inventory & Parts" "Handles stock reservation and replacement parts deduction." "Spring Domain Module"
-                billingInvoicing = component "Billing & Invoicing" "Generates invoices and records transaction billing data." "Spring Domain Module"
-                asyncNotification = component "Async Notification" "Emits asynchronous events for messaging services." "Spring Event / Async"
+            webApp = container "Spring Boot Application" "Modular monolith executing core business logic" "Spring Boot / Java 21" {
+                securityAuth = component "Security & Auth" "Filter Chain & JWT Claims" "Spring Security"
+                userIdentity = component "User & Identity" "User profiles & client records" "Spring Domain"
+                bookingsService = component "Bookings & Service" "Core repair lifecycle orchestrator" "Spring Domain"
+                pricingCalc = component "Pricing Calculator" "Estimates & dynamic price quotes" "Spring Service"
+                inventoryParts = component "Inventory & Parts" "Stock reservation & parts deduction" "Spring Domain"
+                billingInvoicing = component "Billing & Invoicing" "Invoice generation & billing logs" "Spring Domain"
+                asyncNotification = component "Async Notification" "Event-driven background messaging" "Spring Event"
             }
 
-            redisCache = container "Redis Cache" "In-memory key-value cache used for session storage, query caching, and rate limiting via the Cache-Aside pattern." "Redis" "Database"
-            database = container "PostgreSQL Database" "Primary relational database storing system entities, user profiles, inventory, repair logs, and billing data." "PostgreSQL" "Database"
+            redisCache = container "Redis Cache" "Session storage & Cache-Aside store" "Redis" "Database"
+            database = container "PostgreSQL Database" "Primary persistence database" "PostgreSQL" "Database"
         }
 
         # --- External Software Systems ---
-        whatsAppApi = softwareSystem "WhatsApp Cloud API" "Delivers automated real-time status updates, quote approval requests, and collection notifications directly to customers."
-        paymentGateway = softwareSystem "Payment Gateway API" "Processes customer online invoice payments securely and returns transaction verifications."
-        smtpService = softwareSystem "SMTP Email Service" "Dispatches transactional booking confirmations, digital PDF invoices, receipts, and account verification links."
+        whatsAppApi = softwareSystem "WhatsApp Cloud API" "Automated status updates & collection alerts"
+        paymentGateway = softwareSystem "Payment Gateway API" "Processes online invoice payments"
+        smtpService = softwareSystem "SMTP Email Service" "Dispatches booking receipts & PDF invoices"
 
-        # --- Level 1 & 2 System Relationships ---
-        publicVisitor -> blueSpaceSystem "Browses services, calculates estimates, requests quotes" "HTTPS"
-        customer -> blueSpaceSystem "Books repairs, tracks progress, approves quotes, pays invoices" "HTTPS"
-        technician -> blueSpaceSystem "Logs diagnostics, requests replacement parts, updates status" "HTTPS"
-        admin -> blueSpaceSystem "Manages users, sets pricing, generates reports, oversees business" "HTTPS"
+        # --- Level 1 Relationships ---
+        publicVisitor -> blueSpaceSystem "Browses services & requests quotes" "HTTPS"
+        customer -> blueSpaceSystem "Books repairs & pays invoices" "HTTPS"
+        technician -> blueSpaceSystem "Updates repair stages & logs parts" "HTTPS"
+        admin -> blueSpaceSystem "Configures pricing & manages business" "HTTPS"
 
-        blueSpaceSystem -> whatsAppApi "Triggers automated message notifications" "HTTPS/REST"
-        blueSpaceSystem -> paymentGateway "Initiates payment sessions and verifies transactions" "HTTPS/REST"
-        blueSpaceSystem -> smtpService "Sends system emails, invoices, and receipts" "SMTP/HTTPS"
+        blueSpaceSystem -> whatsAppApi "Triggers automated messages" "HTTPS/REST"
+        blueSpaceSystem -> paymentGateway "Processes transactions" "HTTPS/REST"
+        blueSpaceSystem -> smtpService "Sends receipts & system emails" "SMTP/HTTPS"
 
-        # --- Container Level Relationships ---
-        publicVisitor -> cloudflare "Accesses platform services via" "HTTPS"
+        # --- Level 2 Container Relationships ---
+        publicVisitor -> cloudflare "Accesses platform via" "HTTPS"
         customer -> cloudflare "Accesses customer portal via" "HTTPS"
         technician -> cloudflare "Accesses technician workspace via" "HTTPS"
-        admin -> cloudflare "Accesses admin management console via" "HTTPS"
+        admin -> cloudflare "Accesses management console via" "HTTPS"
 
-        cloudflare -> nginx "Proxies verified traffic to" "HTTPS"
+        cloudflare -> nginx "Proxies traffic to" "HTTPS"
         nginx -> webApp "Routes requests internally to" "HTTP"
         
-        webApp -> redisCache "Caches and reads frequent data using Cache-Aside pattern" "RESP Protocol"
-        webApp -> database "Reads and writes persistence data" "JDBC / SQL"
+        webApp -> redisCache "Caches data via Cache-Aside" "RESP"
+        webApp -> database "Reads/Writes data" "JDBC/SQL"
 
         webApp -> whatsAppApi "Sends real-time updates via" "HTTPS/REST"
-        webApp -> paymentGateway "Processes transactions via" "HTTPS/REST"
+        webApp -> paymentGateway "Processes payments via" "HTTPS/REST"
         webApp -> smtpService "Dispatches emails via" "SMTP/HTTPS"
 
-        # --- Level 3 Internal Component Relationships ---
-        nginx -> securityAuth "Forwards incoming REST requests to" "HTTP"
+        # --- Level 3 Component Relationships ---
+        nginx -> securityAuth "Forwards REST requests to" "HTTP"
         securityAuth -> bookingsService "Enforces Security Context"
-        userIdentity -> bookingsService "Validates Profile"
+        userIdentity -> bookingsService "Validates User Profile"
         
-        bookingsService -> pricingCalc "Get Estimate"
-        bookingsService -> inventoryParts "Reserve / Deduct Parts"
-        bookingsService -> billingInvoicing "Create Invoice"
-        bookingsService -> asyncNotification "Emits Event"
+        bookingsService -> pricingCalc "Requests Price Estimate"
+        bookingsService -> inventoryParts "Reserves / Deducts Stock"
+        bookingsService -> billingInvoicing "Generates Invoice"
+        bookingsService -> asyncNotification "Emits Async Event"
 
-        securityAuth -> redisCache "Validates session token"
+        securityAuth -> redisCache "Validates session tokens"
         bookingsService -> database "Persists repair state"
         billingInvoicing -> paymentGateway "Processes invoice payment"
-        asyncNotification -> whatsAppApi "Triggers message"
-        asyncNotification -> smtpService "Sends email"
+        asyncNotification -> whatsAppApi "Triggers WhatsApp alert"
+        asyncNotification -> smtpService "Triggers email receipt"
     }
 
     views {
@@ -94,7 +94,7 @@ workspace "BlueSpace Tech Platform" "Architecture documentation for BlueSpace Te
         styles {
             element "Element" {
                 color #ffffff
-                fontSize 22
+                fontSize 34
             }
             element "Person" {
                 background #08427b
@@ -102,17 +102,20 @@ workspace "BlueSpace Tech Platform" "Architecture documentation for BlueSpace Te
             }
             element "Software System" {
                 background #1168bd
+                fontSize 36
             }
             element "Container" {
-                background #438dd5
+                background #2b78c5
+                fontSize 34
             }
             element "Component" {
-                background #85bbf0
-                color #000000
+                background #5294d3
+                color #ffffff
+                fontSize 32
             }
             element "Database" {
                 shape Cylinder
-                background #2a629a
+                background #1f5183
             }
         }
 
