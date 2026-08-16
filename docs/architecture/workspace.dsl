@@ -122,3 +122,4 @@ workspace "BlueSpace Tech Platform" "Architecture documentation for BlueSpace Te
         theme default
     }
 }
+ 
