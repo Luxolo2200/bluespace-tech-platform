@@ -29,10 +29,14 @@ jobs:
         run: |
           ./structurizr/structurizr.sh export -w docs/architecture/workspace.dsl -f mermaid -o docs/architecture/diagrams
 
+      - name: Create Puppeteer Config
+        run: |
+          echo '{"args": ["--no-sandbox", "--disable-setuid-sandbox"]}' > puppeteerConfig.json
+
       - name: Render High-Resolution PNGs
         run: |
           for f in docs/architecture/diagrams/*.mmd; do
-            mmdc -i "$f" -o "${f%.mmd}.png" --scale 3 --backgroundColor transparent
+            mmdc -i "$f" -o "${f%.mmd}.png" --scale 3 -p puppeteerConfig.json --backgroundColor transparent
           done
 
       - name: Commit and Push Rendered Diagrams
