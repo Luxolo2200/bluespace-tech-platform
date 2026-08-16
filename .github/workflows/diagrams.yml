@@ -1,59 +1,43 @@
-name: Generate Architecture Diagrams
+name: Render Architecture Diagrams
 
 on:
   push:
-    branches: [ main ]
-
-permissions:
-  contents: write
+    paths:
+      - 'docs/architecture/workspace.dsl'
+  workflow_dispatch:
 
 jobs:
-  export-diagrams:
+  render:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Set up Java JDK
-        uses: actions/setup-java@v4
-        with:
-          java-version: '17'
-          distribution: 'temurin'
-
-      - name: Set up Node.js
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
 
-      - name: Install Mermaid CLI
-        run: npm install -g @mermaid-js/mermaid-cli
-
-      - name: Download Structurizr CLI
+      - name: Install Structurizr CLI and Mermaid CLI
         run: |
+          npm install -g @mermaid-js/mermaid-cli
           wget https://github.com/structurizr/cli/releases/download/v2024.03.03/structurizr-cli.zip
-          unzip structurizr-cli.zip -d structurizr-cli
+          unzip structurizr-cli.zip -d structurizr
+          chmod +x structurizr/structurizr.sh
 
-      - name: Create Output Directory
-        run: mkdir -p docs/architecture/diagrams
-
-      - name: Export Mermaid Diagrams
+      - name: Export Structurizr DSL to Mermaid
         run: |
-          ./structurizr-cli/structurizr.sh export \
-            -workspace docs/architecture/workspace.dsl \
-            -format mermaid \
-            -output docs/architecture/diagrams
+          ./structurizr/structurizr.sh export -w docs/architecture/workspace.dsl -f mermaid -o docs/architecture/diagrams
 
-      - name: Render Mermaid to PNG
+      - name: Render High-Resolution PNGs
         run: |
-          echo '{"args": ["--no-sandbox"]}' > puppeteer-config.json
-          for file in docs/architecture/diagrams/*.mmd; do
-            mmdc -p puppeteer-config.json -i "$file" -o "${file%.mmd}.png" -t forest -b transparent
+          for f in docs/architecture/diagrams/*.mmd; do
+            mmdc -i "$f" -o "${f%.mmd}.png" --scale 3 --backgroundColor transparent
           done
 
-      - name: Commit and Push Diagrams
+      - name: Commit and Push Rendered Diagrams
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add -f docs/architecture/diagrams/
-          git commit -m "chore(docs): auto-generate updated mermaid .mmd and .png diagrams" || echo "No changes to commit"
-          git push origin main
+          git add docs/architecture/diagrams/*.png docs/architecture/diagrams/*.mmd
+          git diff --quiet && git diff --staged --quiet || (git commit -m "chore(docs): render high-resolution architecture diagrams [skip ci]" && git push)
