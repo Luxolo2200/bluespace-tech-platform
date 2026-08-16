@@ -12,7 +12,17 @@ workspace "BlueSpace Tech Platform" "Architecture documentation for BlueSpace Te
             
             cloudflare = container "Cloudflare CDN / WAF" "Provides global DNS, DDoS protection, WAF security, free SSL, and static asset caching." "Cloudflare Edge"
             nginx = container "NGINX Reverse Proxy" "Handles internal routing, request forwarding, and SSL termination within the Docker host." "NGINX / Docker"
-            webApp = container "Spring Boot Application" "Modular monolith executing business logic, booking engine, price calculations, billing, and system APIs." "Spring Boot / Java"
+            
+            webApp = container "Spring Boot Application" "Modular monolith executing business logic, booking engine, price calculations, billing, and system APIs." "Spring Boot / Java 21" {
+                securityAuth = component "Security & Auth Component" "Filter Chain and JWT Claims processing." "Spring Security"
+                userIdentity = component "User & Identity Module" "Manages user profiles and customer records." "Spring Domain Module"
+                bookingsService = component "Bookings & Service Module" "Core Domain Orchestrator managing repair lifecycle (Received -> Diagnosed -> In-Repair -> Completed)." "Spring Domain Module"
+                pricingCalc = component "Pricing Calculator" "Calculates estimates and dynamic price quotes." "Spring Service"
+                inventoryParts = component "Inventory & Parts" "Handles stock reservation and replacement parts deduction." "Spring Domain Module"
+                billingInvoicing = component "Billing & Invoicing" "Generates invoices and records transaction billing data." "Spring Domain Module"
+                asyncNotification = component "Async Notification" "Emits asynchronous events for messaging services." "Spring Event / Async"
+            }
+
             redisCache = container "Redis Cache" "In-memory key-value cache used for session storage, query caching, and rate limiting via the Cache-Aside pattern." "Redis" "Database"
             database = container "PostgreSQL Database" "Primary relational database storing system entities, user profiles, inventory, repair logs, and billing data." "PostgreSQL" "Database"
         }
@@ -22,7 +32,7 @@ workspace "BlueSpace Tech Platform" "Architecture documentation for BlueSpace Te
         paymentGateway = softwareSystem "Payment Gateway API" "Processes customer online invoice payments securely and returns transaction verifications."
         smtpService = softwareSystem "SMTP Email Service" "Dispatches transactional booking confirmations, digital PDF invoices, receipts, and account verification links."
 
-        # --- System Context Level Relationships ---
+        # --- Level 1 & 2 System Relationships ---
         publicVisitor -> blueSpaceSystem "Browses services, calculates estimates, requests quotes" "HTTPS"
         customer -> blueSpaceSystem "Books repairs, tracks progress, approves quotes, pays invoices" "HTTPS"
         technician -> blueSpaceSystem "Logs diagnostics, requests replacement parts, updates status" "HTTPS"
@@ -32,7 +42,7 @@ workspace "BlueSpace Tech Platform" "Architecture documentation for BlueSpace Te
         blueSpaceSystem -> paymentGateway "Initiates payment sessions and verifies transactions" "HTTPS/REST"
         blueSpaceSystem -> smtpService "Sends system emails, invoices, and receipts" "SMTP/HTTPS"
 
-        # --- Container Level Internal Relationships ---
+        # --- Container Level Relationships ---
         publicVisitor -> cloudflare "Accesses platform services via" "HTTPS"
         customer -> cloudflare "Accesses customer portal via" "HTTPS"
         technician -> cloudflare "Accesses technician workspace via" "HTTPS"
@@ -47,6 +57,22 @@ workspace "BlueSpace Tech Platform" "Architecture documentation for BlueSpace Te
         webApp -> whatsAppApi "Sends real-time updates via" "HTTPS/REST"
         webApp -> paymentGateway "Processes transactions via" "HTTPS/REST"
         webApp -> smtpService "Dispatches emails via" "SMTP/HTTPS"
+
+        # --- Level 3 Internal Component Relationships ---
+        nginx -> securityAuth "Forwards incoming REST requests to" "HTTP"
+        securityAuth -> bookingsService "Enforces Security Context"
+        userIdentity -> bookingsService "Validates Profile"
+        
+        bookingsService -> pricingCalc "Get Estimate"
+        bookingsService -> inventoryParts "Reserve / Deduct Parts"
+        bookingsService -> billingInvoicing "Create Invoice"
+        bookingsService -> asyncNotification "Emits Event"
+
+        securityAuth -> redisCache "Validates session token"
+        bookingsService -> database "Persists repair state"
+        billingInvoicing -> paymentGateway "Processes invoice payment"
+        asyncNotification -> whatsAppApi "Triggers message"
+        asyncNotification -> smtpService "Sends email"
     }
 
     views {
@@ -60,10 +86,15 @@ workspace "BlueSpace Tech Platform" "Architecture documentation for BlueSpace Te
             autoLayout tb
         }
 
+        component webApp "Components" {
+            include *
+            autoLayout tb
+        }
+
         styles {
             element "Element" {
                 color #ffffff
-                fontSize 24
+                fontSize 22
             }
             element "Person" {
                 background #08427b
@@ -74,6 +105,10 @@ workspace "BlueSpace Tech Platform" "Architecture documentation for BlueSpace Te
             }
             element "Container" {
                 background #438dd5
+            }
+            element "Component" {
+                background #85bbf0
+                color #000000
             }
             element "Database" {
                 shape Cylinder
